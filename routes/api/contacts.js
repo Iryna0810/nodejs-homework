@@ -1,15 +1,9 @@
 import express from "express"
 import contactsServices from '../../models/contacts.js';
 import { HttpError } from '../../helpers/index.js';
-import Joi from "joi";
+import contactScheme from '../../schema.js'
 
 const router = express.Router()
-
-const contactScheme = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-})
 
 router.get('/', async (req, res, next) => {
   try {
