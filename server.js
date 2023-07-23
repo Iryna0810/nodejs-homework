@@ -15,7 +15,7 @@ mongoose.set('strictQuery', true);
 // console.log(process.env)
 mongoose.connect(DB_HOST)
   .then(() => {
-    app.listen(PORT, () => console.log("Server running. Use our API on port: 3000"))
+    app.listen(PORT, () => console.log("Database connection successful"))
   })
   .catch(error => {
   console.log(error.message);
@@ -24,6 +24,6 @@ mongoose.connect(DB_HOST)
   )
 
 
-app.listen(3000, () => {
-  console.log("Server running. Use our API on port: 3000")
-})
+// app.listen(3000, () => {
+//   console.log("Server running. Use our API on port: 3000")
+// })
