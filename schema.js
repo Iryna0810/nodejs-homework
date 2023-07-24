@@ -4,5 +4,15 @@ const contactScheme = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   phone: Joi.number().required(),
+  favorite:Joi.boolean()
 })
-export default contactScheme
+
+const contactUpdateFavoriteScheme = Joi.object({
+  favorite: Joi.boolean().required()
+})
+
+export default {
+  contactScheme,
+  contactUpdateFavoriteScheme
+}
+
