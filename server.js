@@ -12,7 +12,6 @@ const { DB_HOST, PORT } = process.env;
 //mongodb+srv://iryna-node-js:<password>@cluster0.nynyolw.mongodb.net/?retryWrites=true&w=majority
 //mongodb+srv://iryna-node-js:TgqkK8$dGVA@WRe@cluster0.nynyolw.mongodb.net/
 mongoose.set('strictQuery', true);
-// console.log(process.env)
 mongoose.connect(DB_HOST)
   .then(() => {
     app.listen(PORT, () => console.log("Database connection successful"))
@@ -23,7 +22,3 @@ mongoose.connect(DB_HOST)
 }
   )
 
-
-// app.listen(3000, () => {
-//   console.log("Server running. Use our API on port: 3000")
-// })

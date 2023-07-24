@@ -31,18 +31,18 @@ router.get('/', async (req, res, next) => {
   
 // })
 
-// router.post('/', async (req, res, next) => {
-//   try {
-//     const { error } = contactScheme.validate(req.body);
-//     if (error) {
-//       throw HttpError(400, error.message);
-//     }
-//       const result = await contactsServices.addContact(req.body);
-//       res.status(201).json(result);
-//   } catch (error) {
-//         next(error);
-//   }
-// })
+router.post('/', async (req, res, next) => {
+  try {
+    const { error } = contactScheme.validate(req.body);
+    if (error) {
+      throw HttpError(400, error.message);
+    }
+      const result = await Contact.create(req.body);
+      res.status(201).json(result);
+  } catch (error) {
+        next(error);
+  }
+})
 
 // router.delete('/:contactId', async (req, res, next) => {
 //   try {

@@ -3,12 +3,12 @@ import path from "path";
 import { nanoid } from "nanoid";
   
 // const contactsPath = path.resolve("models", "contacts.json");
-const updateContactsList = contacts => fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+// const updateContactsList = contacts => fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
-async function listContacts () {
-  const listContacts = await fs.readFile(contactsPath, "utf-8");
-  return JSON.parse(listContacts);
-}
+// async function listContacts () {
+//   const listContacts = await fs.readFile(contactsPath, "utf-8");
+//   return JSON.parse(listContacts);
+// }
 
 // async function getContactById(contactId) {
 //     const contacts = await listContacts();
@@ -53,12 +53,12 @@ async function listContacts () {
 //   return newContact;
 // }
 
-export default {
-  listContacts,
+// export default {
+//   listContacts,
   // getContactById,
   // addContact,
   // removeContact,
   // updateContactById,
-}
+// }
 
 
