@@ -1,7 +1,5 @@
 import express from "express";
 import contactController from '../../controllers/contact-controller.js'
-import Contact from "../../models/contact.js";
-import { HttpError } from '../../helpers/index.js';
 import schema from '../../schema.js'
 import {isValidId, isEmptyBody} from '../../middlewars/index.js'
 import validateBody from "../../decorators/validateBody.js";
