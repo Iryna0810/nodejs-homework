@@ -1,8 +1,12 @@
 import { Schema, model } from "mongoose";
-import { handleSaveError, validateAtUpdate } from './hooks.js'
-import {emailRegexp} from "../constans/user-constants.js"
+import  {validateAtUpdate, handleSaveError} from './hooks.js'
+import { emailRegexp } from "../constans/user-constants.js"
 
 const userSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required'],   
+    },
     password: {
         type: String,
         required: [true, 'Set password for user'],
@@ -19,9 +23,11 @@ const userSchema = new Schema({
         default: "starter"
     },
     token: String
-});
+},{versionKey: false, timestamps: true});
+
 
 userSchema.pre("findOneAndUpdate", validateAtUpdate);
+
 userSchema.post("save", handleSaveError);
 userSchema.post("findOneAndUpdate", handleSaveError);
 
