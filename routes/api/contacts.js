@@ -1,6 +1,6 @@
 import express from "express";
 import contactController from '../../controllers/contact-controller.js'
-import schema from '../../schema.js'
+import schema from '../../schemas/schema.js'
 import {isValidId, isEmptyBody} from '../../middlewars/index.js'
 import validateBody from "../../decorators/validateBody.js";
 
