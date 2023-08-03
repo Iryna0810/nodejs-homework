@@ -4,7 +4,8 @@ const contactScheme = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   phone: Joi.number().required(),
-  favorite:Joi.boolean()
+  favorite: Joi.boolean(),
+  owner: Joi.string(),
 })
 
 const contactUpdateFavoriteScheme = Joi.object({
