@@ -29,8 +29,12 @@ const getOneById = async (req, res, next) => {
 const addContact = async (req, res, next) => {
     try {      
         const { _id: owner } = req.user;
-        const result = await Contact.create({...req.body, owner});
-        res.status(201).json(result);
+        // const result = await Contact.create({...req.body, owner});
+        // res.status(201).json(result);
+
+        console.log(req.file);
+        console.log(req.body);
+        
     } catch (error) {
         next(error);
     }
