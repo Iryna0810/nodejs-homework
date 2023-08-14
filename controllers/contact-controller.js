@@ -3,7 +3,10 @@ import { HttpError } from "../helpers/index.js";
 
 const getAll = async (req, res, next) => {
     try {
-        const result = await Contact.find();
+        const { _id: owner } = req.user;
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
+         const result = await Contact.find({owner}, "-createdAt -updatedAt", {skip, limit}).populate("owner", "name, email");
         res.json(result);
     } catch (error) {
         res.status(500).json({ message: "Server error", })
@@ -24,12 +27,9 @@ const getOneById = async (req, res, next) => {
 };
 
 const addContact = async (req, res, next) => {
-    try {
-        const { error } = schema.contactScheme.validate(req.body);
-        if (error) {
-            throw HttpError(400, error.message);
-        }
-        const result = await Contact.create(req.body);
+    try {      
+        const { _id: owner } = req.user;
+        const result = await Contact.create({...req.body, owner});
         res.status(201).json(result);
     } catch (error) {
         next(error);
