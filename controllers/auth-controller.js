@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs/promises"
+import gravatar from 'gravatar';
 import HttpError from "../helpers/HttpError.js";
 import User from "../models/users.js";
 import bcrypt from "bcryptjs";
@@ -22,11 +23,14 @@ const signup = async (req, res, next) => {
 
             await fs.rename(oldPath, newPath);        
             const avatarURL = path.join('avatar', filename)
+
+            // const avatarURL = gravatar.url(email)
             const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword });
 
             res.status(201).json({
             name: newUser.name,
             email: newUser.email,
+            avatarURL: newUser.avatarURL,
         })
     } catch (error) {
         next(error);

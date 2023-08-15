@@ -1,5 +1,6 @@
 import multer from "multer";
 import path from 'path';
+import gravatar from 'gravatar';
 
 const destination = path.resolve('temp');
 
