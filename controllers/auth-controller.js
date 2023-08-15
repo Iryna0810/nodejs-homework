@@ -1,3 +1,5 @@
+import path from "path";
+import fs from "fs/promises"
 import HttpError from "../helpers/HttpError.js";
 import User from "../models/users.js";
 import bcrypt from "bcryptjs";
@@ -5,6 +7,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config"
 
 const { JWT_SECRET } = process.env;
+const avatarPath = path.resolve("public", "avatar");
 
 const signup = async (req, res, next) => {
         try {
@@ -14,8 +17,13 @@ const signup = async (req, res, next) => {
             throw HttpError(409, "Email in use");
             }
             const hashPassword = await bcrypt.hash(password, 10);
-            const newUser = await User.create({ ...req.body, password: hashPassword });
-            
+            const { path: oldPath, filename } = req.file;
+            const newPath = path.join(avatarPath, filename);
+
+            await fs.rename(oldPath, newPath);        
+            const avatarURL = path.join('avatar', filename)
+            const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword });
+
             res.status(201).json({
             name: newUser.name,
             email: newUser.email,

@@ -12,10 +12,7 @@ router.get('/', contactController.getAll);
 
 router.get('/:contactId', isValidId, contactController.getOneById);
 
-// router.post('/', isEmptyBody, validateBody(schema.contactScheme), contactController.addContact);
-
-router.post('/', upload.single('poster'), validateBody(schema.contactScheme), contactController.addContact);
-
+router.post('/', isEmptyBody, validateBody(schema.contactScheme), contactController.addContact);
 
 router.put('/:contactId', isValidId, validateBody(schema.contactScheme), contactController.updateById);
 

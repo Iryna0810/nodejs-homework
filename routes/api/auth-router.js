@@ -2,11 +2,12 @@ import express from "express";
 import validateBody from "../../decorators/validateBody.js";
 import userShema from "../../schemas/user-schemas.js";
 import authController from "../../controllers/auth-controller.js";
+import {upload} from '../../middlewars/index.js'
 import {authenticate} from "../../middlewars/index.js" 
 
 const authRouter = express.Router();
 
-authRouter.post('/register', validateBody(userShema.userSignUpSchema), authController.signup);
+authRouter.post('/register', upload.single('avatar'), validateBody(userShema.userSignUpSchema), authController.signup);
 
 authRouter.post("/login", validateBody(userShema.userSignInSchema), authController.signin)
 
