@@ -13,6 +13,8 @@ authRouter.post("/login", validateBody(userShema.userSignInSchema), authControll
 
 authRouter.get("/current", authenticate, authController.getCurrent);
 
+authRouter.patch("/avatars", authenticate, upload.single('avatar'), authController.updateAvatar)
+
 authRouter.get("/logout", authenticate, authController.logout);
 
 export default authRouter

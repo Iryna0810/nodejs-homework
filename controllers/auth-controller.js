@@ -5,7 +5,8 @@ import HttpError from "../helpers/HttpError.js";
 import User from "../models/users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import "dotenv/config"
+import "dotenv/config";
+import Jimp from "jimp";
 
 const { JWT_SECRET } = process.env;
 const avatarPath = path.resolve("public", "avatar");
@@ -18,13 +19,8 @@ const signup = async (req, res, next) => {
             throw HttpError(409, "Email in use");
             }
             const hashPassword = await bcrypt.hash(password, 10);
-            const { path: oldPath, filename } = req.file;
-            const newPath = path.join(avatarPath, filename);
-
-            await fs.rename(oldPath, newPath);        
-            const avatarURL = path.join('avatar', filename)
-
-            // const avatarURL = gravatar.url(email)
+           
+            const avatarURL = gravatar.url(email)
             const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword });
 
             res.status(201).json({
@@ -81,6 +77,45 @@ const getCurrent = async (req, res, next) => {
     }
 }
 
+const updateAvatar = async (req, res, next) => {
+    try {
+        const { path: oldPath, filename } = req.file;   
+        const { _id, email } = req.user;
+        
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw HttpError(401, "Not authorized");
+        }
+
+
+            Jimp.read(oldPath)
+            .then((filename) => {filename.resize(250, 250)})
+            .catch((error) => {
+                next(error); 
+            });
+        
+
+
+        const newPath = path.join(avatarPath, filename);
+         await fs.rename(oldPath, newPath); 
+
+        console.log(newPath);
+       
+        const avatarURL = path.join('avatar', filename)
+        await User.findByIdAndUpdate(_id, { avatarURL });     
+        
+              res.json({
+            avatarURL,
+                })
+        
+
+    } catch (error) {
+        next(error); 
+    }
+
+
+}
+
 const logout = async (req, res, next) => {
     try {
         const { _id } = req.user;
@@ -99,5 +134,6 @@ export default {
     signup,
     signin,
     getCurrent,
+    updateAvatar,
     logout,
 }
