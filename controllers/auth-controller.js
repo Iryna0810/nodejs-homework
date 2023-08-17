@@ -79,7 +79,7 @@ const getCurrent = async (req, res, next) => {
 
 const updateAvatar = async (req, res, next) => {
     try {
-        const { path: oldPath, filename } = req.file;   
+        const { path: oldPath, filename } = req.file;
         const { _id, email } = req.user;
         
         const user = await User.findOne({ email });
@@ -88,28 +88,27 @@ const updateAvatar = async (req, res, next) => {
         }
      
         const newPath = path.join(avatarPath, filename);
-        await fs.rename(oldPath, newPath); 
+        await fs.rename(oldPath, newPath);
         
-            Jimp.read(newPath)
-            .then((filename) => {filename.resize(250, 250)})
-            .catch((error) => {
-                next(error); 
-            });
+        const image = await Jimp.read(newPath);
+
+        await image.cover(250, 250);
+        await image.writeAsync(newPath);
+
                
         const avatarURL = path.join('avatar', filename)
-        await User.findByIdAndUpdate(_id, { avatarURL });     
+        await User.findByIdAndUpdate(_id, { avatarURL });
         
-              res.json({
+        res.json({
             avatarURL,
-                })
+        })
         
 
     } catch (error) {
-        next(error); 
+        next(error);
     }
+};
 
-
-}
 
 const logout = async (req, res, next) => {
     try {
