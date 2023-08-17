@@ -1,7 +1,7 @@
 import express from "express";
 import contactController from '../../controllers/contact-controller.js'
 import schema from '../../schemas/schema.js'
-import {isValidId, isEmptyBody, authenticate} from '../../middlewars/index.js'
+import {isValidId, isEmptyBody, upload, authenticate} from '../../middlewars/index.js'
 import validateBody from "../../decorators/validateBody.js";
 
 const router = express.Router()
