@@ -3,7 +3,8 @@ import validateBody from "../../decorators/validateBody.js";
 import userShema from "../../schemas/user-schemas.js";
 import authController from "../../controllers/auth-controller.js";
 import {upload} from '../../middlewars/index.js'
-import {authenticate} from "../../middlewars/index.js" 
+import { authenticate } from "../../middlewars/index.js" 
+// import request from "../../helpers/sendEmails.js";
 
 const authRouter = express.Router();
 
@@ -13,7 +14,7 @@ authRouter.post("/login", validateBody(userShema.userSignInSchema), authControll
 
 authRouter.get("/current", authenticate, authController.getCurrent);
 
-authRouter.patch("/avatars", authenticate, upload.single('avatar'), authController.updateAvatar)
+authRouter.patch("/avatars",  authenticate, upload.single('avatar'), authController.updateAvatar)
 
 authRouter.get("/logout", authenticate, authController.logout);
 

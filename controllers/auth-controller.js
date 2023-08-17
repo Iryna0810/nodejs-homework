@@ -1,12 +1,14 @@
 import path from "path";
 import fs from "fs/promises"
 import gravatar from 'gravatar';
-import HttpError from "../helpers/HttpError.js";
+import {HttpError, request} from "../helpers/index.js";
 import User from "../models/users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import Jimp from "jimp";
+// import request from "../helpers/sendEmails.js";
+
 
 const { JWT_SECRET } = process.env;
 const avatarPath = path.resolve("public", "avatar");
@@ -22,6 +24,8 @@ const signup = async (req, res, next) => {
            
             const avatarURL = gravatar.url(email)
             const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword });
+
+            // await request();
 
             res.status(201).json({
             name: newUser.name,
