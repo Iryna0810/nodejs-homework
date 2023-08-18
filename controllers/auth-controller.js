@@ -27,9 +27,9 @@ const signup = async (req, res, next) => {
             const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword, verificationCode });
 
             const verifyEmail = {
-                to: email,
-        subject: "Verify email",
-        html: `<strong>TEST EMAIL </strong>`,
+            to: email,
+            subject: "Verify email",
+            html: "<strong>TEST EMAIL </strong>",
             };
 
            await sendEmail(verifyEmail);

@@ -5,7 +5,7 @@ const { UKR_PASSWORD, EMAIL_FROM } = process.env;
 
 const nodemailerConfig = {
   host: "smtp.ukr.net",
-  port: 25, // 465, 2525
+  port: 465, // 25, 2525
   secure: false,
   auth: {
     user: EMAIL_FROM,
