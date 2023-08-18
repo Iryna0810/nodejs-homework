@@ -1,16 +1,16 @@
 import path from "path";
 import fs from "fs/promises"
 import gravatar from 'gravatar';
-import {HttpError, request} from "../helpers/index.js";
+import {HttpError, sendEmail} from "../helpers/index.js";
 import User from "../models/users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import Jimp from "jimp";
-// import request from "../helpers/sendEmails.js";
+import { nanoid } from "nanoid";
 
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, BASE_URL } = process.env;
 const avatarPath = path.resolve("public", "avatar");
 
 const signup = async (req, res, next) => {
@@ -21,11 +21,19 @@ const signup = async (req, res, next) => {
             throw HttpError(409, "Email in use");
             }
             const hashPassword = await bcrypt.hash(password, 10);
+            const verificationCode = nanoid();
            
             const avatarURL = gravatar.url(email)
-            const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword });
+            const newUser = await User.create({ ...req.body, avatarURL, password: hashPassword, verificationCode });
 
-            // await request();
+            const verifyEmail = {
+                to: email,
+        subject: "Verify email",
+        html: `<a href="${BASE_URL}/api/auth/verify/${verificationCode}" target="_blank">Click verify email</a>`,
+            };
+
+           await sendEmail(verifyEmail);
+
 
             res.status(201).json({
             name: newUser.name,

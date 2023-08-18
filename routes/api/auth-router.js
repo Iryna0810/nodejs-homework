@@ -4,7 +4,6 @@ import userShema from "../../schemas/user-schemas.js";
 import authController from "../../controllers/auth-controller.js";
 import {upload} from '../../middlewars/index.js'
 import { authenticate } from "../../middlewars/index.js" 
-// import request from "../../helpers/sendEmails.js";
 
 const authRouter = express.Router();
 
