@@ -1,13 +1,14 @@
 import path from "path";
 import fs from "fs/promises"
 import gravatar from 'gravatar';
-import {HttpError, sendEmail} from "../helpers/index.js";
+import {HttpError} from "../helpers/index.js";
 import User from "../models/users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import Jimp from "jimp";
 import { nanoid } from "nanoid";
+import sendEmail from "../helpers/sendEmails.js";
 
 
 const { JWT_SECRET, BASE_URL } = process.env;
