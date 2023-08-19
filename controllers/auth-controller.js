@@ -49,17 +49,21 @@ const signup = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
     try {
         const { verificationToken } = req.params;
-        const { email } = req.body;
 
         const user = await User.findOne({ verificationToken });
         if (!user) {
             throw HttpError(404, "User not found");
         }
-        await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: "" });
-        
+
+        await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: "111" });
+
+
         res.status(200).json({
          message:"Verification successful"
         })
+
+        
+
     } catch (error) {
        next(error); 
     }
