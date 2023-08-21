@@ -29,7 +29,7 @@ const userSchema = new Schema({
   verificationToken: {
     type: String,
     required: [true, 'Verify token is required'],
-    default:"111",
+    default:"",
   },
     avatarURL: {
         type: String,
@@ -40,7 +40,6 @@ const userSchema = new Schema({
 },{versionKey: false, timestamps: true});
 
 
-userSchema.pre("findOneAndUpdate", validateAtUpdate);
 
 userSchema.post("save", handleSaveError);
 userSchema.post("findOneAndUpdate", handleSaveError);

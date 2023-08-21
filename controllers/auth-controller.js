@@ -39,7 +39,6 @@ const signup = async (req, res, next) => {
             name: newUser.name,
             email: newUser.email,
             avatarURL: newUser.avatarURL,
-            token: newUser.verificationToken,
         })
     } catch (error) {
         next(error);
@@ -54,8 +53,7 @@ const verifyEmail = async (req, res, next) => {
         if (!user) {
             throw HttpError(404, "User not found");
         }
-
-        await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: "111" });
+        await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: "" });
 
 
         res.status(200).json({
